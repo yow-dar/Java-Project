@@ -25,7 +25,7 @@ public class MainWindow {
 		window.setLayout(null);
 		window.getContentPane().setBackground(Color.black);
 		window.setTitle("Main");
-		window.setSize(1280,720);
+		window.setSize(800,600);
 		window.setResizable(false);
 		window.addWindowListener(new MainWindowListeners(window));
 		window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
