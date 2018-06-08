@@ -14,14 +14,6 @@ import javax.imageio.ImageTypeSpecifier;
 import javax.naming.spi.DirStateFactory.Result;
 
 public class ImgUtils {
-    /**
-     * 缩放图片方法
-     * @param srcImageFile 要缩放的图片路径
-     * @param result 缩放后的图片路径
-     * @param height 目标高度像素
-     * @param width  目标宽度像素  
-     * @param bb     是否补白
-     */
      public final static void scale(String srcImageFile, String result, int height, int width, boolean bb) {
             try {
                 double ratio = 0.0; // 缩放比例
@@ -64,15 +56,6 @@ public class ImgUtils {
             }
         }
 
-     /**
-      * 裁剪图片方法
-      * @param bufferedImage 图像源
-      * @param startX 裁剪开始x坐标
-      * @param startY 裁剪开始y坐标
-      * @param endX 裁剪结束x坐标
-      * @param endY 裁剪结束y坐标
-      * @return
-      */
      public static BufferedImage cropImage(BufferedImage bufferedImage, int startX, int startY, int endX, int endY) {
             int width = bufferedImage.getWidth();
             int height = bufferedImage.getHeight();

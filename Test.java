@@ -59,7 +59,7 @@ public class Test {
         File newfile2=new File("C:/Users/user/Desktop/test/davis2.png");
         BufferedImage bufferedimage2 = new BufferedImage(800, 340, BufferedImage.TYPE_INT_ARGB);
         bufferedimage2 = ImageIO.read(newfile2);
-        ImageIO.write(bufferedimage2, "png", new File("C:/Users/user/Desktop/test/davis/"+"test"+".png"));
+        //ImageIO.write(bufferedimage2, "png", new File("C:/Users/user/Desktop/test/davis/"+"test"+".png"));
         File newfile3=new File("C:/Users/user/Desktop/test/davis_ball.png");
         BufferedImage bufferedimage3 = new BufferedImage(328, 141, BufferedImage.TYPE_INT_ARGB);
         bufferedimage3 = ImageIO.read(newfile3);

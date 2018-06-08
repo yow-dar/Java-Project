@@ -1,47 +1,41 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.util.concurrent.Delayed;
+import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class character extends JPanel implements ActionListener, KeyListener {
+public abstract class character extends JPanel implements Runnable{
 
-	private Graphics g; // new added
-	private BufferedImage to_be_painted; // new added
+	private Graphics g;
 	private Timer t;
-	private static double x, y, mx, my;
+	private double x ,y , mx , my;
 	private int hp, mp;
-	private boolean is_hit, is_right;
+	protected final int normalDamage = 10;
+	protected final int skillDamage = 10;
+	private boolean is_hit;
+	private boolean is_right;
+	protected BufferedImage to_be_painted;
 
 	public character() {
-		t = new Timer(5, this);
-		x = 0;
-		y = 0;
-		mx = 0;
-		my = 0;
+		g = null;
+		x=0;
+		y=0;
+		mx=0;
+		my=0;
 		hp = 100;
 		mp = 100;
 		is_hit = false;
 		is_right = true;
+		g = getGraphics();
 		t.start();
-		File file = new File("C:\\Users\\User\\Desktop\\test.jpg"); // new addeed
-		try {
-			to_be_painted = ImageIO.read(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		g = to_be_painted.getGraphics(); // new added
-		addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
-	}
-
-	public void paint(Graphics g) {
-		//super.paint(g);
-		g.drawImage(to_be_painted, (int) x, (int) y, (int) 100, (int) 100, null); // new added
+		g = to_be_painted.getGraphics(); // new added
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -54,13 +48,9 @@ public class character extends JPanel implements ActionListener, KeyListener {
 		repaint();
 	}
 
-	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_X)
-			Game.changeX(e.getKeyCode());
-		else {
-			mx = Game.changeX(e.getKeyCode());
-			my = Game.changeY(e.getKeyCode());
-		}
+	/*public void keyPressed(KeyEvent e) {
+		mx = Move.changeX(e.getKeyCode());
+		my = Move.changeY(e.getKeyCode());
 	}
 
 	public void keyTyped(KeyEvent e) {
@@ -69,13 +59,21 @@ public class character extends JPanel implements ActionListener, KeyListener {
 	public void keyReleased(KeyEvent e) {
 		mx = 0;
 		my = 0;
-	}
+	}*/
 
-	public static double getx() {
+	public void setx(double x) {
+		this.x = x;
+	}
+	
+	public double getx() {
 		return x;
 	}
+	
+	public void sety(double y) {
+		this.y = y;
+	}
 
-	public static double gety() {
+	public double gety() {
 		return y;
 	}
 
@@ -83,7 +81,7 @@ public class character extends JPanel implements ActionListener, KeyListener {
 		return hp;
 	}
 
-	public void HP(int hp) {
+	public void setHP(int hp) {
 		this.hp = hp;
 	}
 
@@ -98,19 +96,34 @@ public class character extends JPanel implements ActionListener, KeyListener {
 	public boolean getHit() {
 		return is_hit;
 	}
-
-	public void setHit(boolean is_hit) {
+	
+	public void setHit(boolean is_hit) throws InterruptedException {
 		this.is_hit = is_hit;
+		if(is_hit) {
+			TimeUnit.SECONDS.sleep(1);
+			this.is_hit = false;
+		}
 	}
 
 	public boolean getRight() {
 		return is_right;
 	}
-
+	
 	public void setRight(boolean is_right) {
 		this.is_right = is_right;
 	}
-	
-	public static void main(String[] args){
+
+	public void changeImage(BufferedImage[] images) throws InterruptedException {
+		Graphics g = getGraphics();
+		for(int i = 0; i < images.length; ++i) {
+			to_be_painted = images[i];
+			update(g);
+			TimeUnit.MICROSECONDS.sleep(100);
+		}
 	}
+	public void paint(Graphics g) {
+		g.drawImage(to_be_painted, (int)x, (int)y, null);
+	}
+	public abstract void run();
+	public abstract void start();
 }
