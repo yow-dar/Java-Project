@@ -1,20 +1,22 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class character extends JPanel implements ActionListener, KeyListener {
-
-	private Graphics g;
+	
+	private Graphics g;	// new added
+	private BufferedImage to_be_painted; // new added
 	private Timer t;
-	private double x ,y , mx , my;
+	private static double x, y, mx, my;
 	private int hp, mp;
-	private boolean is_hit;
-	private boolean is_right;
+	private boolean is_hit, is_right;
 
-	public character() {
-		g = null;
+	public character() throws IOException {
 		t = new Timer(5, this);
 		x=0;
 		y=0;
@@ -24,8 +26,10 @@ public class character extends JPanel implements ActionListener, KeyListener {
 		mp = 100;
 		is_hit = false;
 		is_right = true;
-		g = getGraphics();
 		t.start();
+		File file = new File("C:\\Users\\User\\Desktop\\test.jpg"); // new addeed
+		to_be_painted = ImageIO.read(file); // new added
+		g = to_be_painted.getGraphics(); // new added
 		addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
@@ -33,7 +37,7 @@ public class character extends JPanel implements ActionListener, KeyListener {
 
 	public void paint(Graphics g) {
 		super.paint(g);
-		g.fillOval((int) x, (int) y, 60, 60);
+		g.drawImage(to_be_painted, (int)x, (int)y, (int)100, (int)100, null); // new added
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -47,8 +51,12 @@ public class character extends JPanel implements ActionListener, KeyListener {
 	}
 
 	public void keyPressed(KeyEvent e) {
-		mx = Move.changeX(e.getKeyCode());
-		my = Move.changeY(e.getKeyCode());
+		if (e.getKeyCode() == KeyEvent.VK_X);
+		else
+		{
+			mx = Game.changeX(e.getKeyCode());
+			my = Game.changeY(e.getKeyCode());
+		}
 	}
 
 	public void keyTyped(KeyEvent e) {
@@ -59,11 +67,11 @@ public class character extends JPanel implements ActionListener, KeyListener {
 		my = 0;
 	}
 
-	public double getx() {
+	public static double getx() {
 		return x;
 	}
 
-	public double gety() {
+	public static double gety() {
 		return y;
 	}
 
@@ -95,21 +103,20 @@ public class character extends JPanel implements ActionListener, KeyListener {
 		return is_right;
 	}
 	
-	public void setRight(boolean is_hit) {
+	public void setRight(boolean is_right) {
 		this.is_right = is_right;
 	}
+	
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		JFrame f = new JFrame("Java Project");
 		character i = new character();
 
+		//f.add();
 		f.add(i);
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setSize(800, 600);
 		f.setResizable(false);
-	}
-	public void changeImage(BufferedImage[] a) {
-		
 	}
 }
