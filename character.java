@@ -1,52 +1,41 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.Ellipse2D;
 import javax.swing.*;
 
 public class character extends JPanel implements ActionListener, KeyListener {
 
-	Timer t = new Timer(10, this);
-	double x = 0, y = 0, mx = 0, my = 0;
+	private Graphics g = null;
+	private Timer t = new Timer(5, this);
+	private double x = 0, y = 0, mx = 0, my = 0;
+	private int hp = 100, mp = 100;
+	private boolean is_hit = false;
 
 	public character() {
+		g = getGraphics();
 		t.start();
 		addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
 	}
 
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D) g;
-		g2.fill(new Ellipse2D.Double(x, y, 60, 100));
+	public void paint(Graphics g) {
+		super.paint(g);
+		g.fillOval((int) x, (int) y, 60, 60);
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent e) {
-		repaint();
+		if (x < 0 || x > 720)
+			mx = -mx;
+		if (y < 0 || y > 500)
+			my = -my;
 		x += mx;
 		y += my;
+		repaint();
 	}
 
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			mx = 0;
-			my = -5;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			mx = 0;
-			my = 5;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			mx = 5;
-			my = 0;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			mx = -5;
-			my = 0;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_SPACE){
-		}
+		mx = Move.changeX(e.getKeyCode());
+		my = Move.changeY(e.getKeyCode());
 	}
 
 	public void keyTyped(KeyEvent e) {
@@ -57,4 +46,46 @@ public class character extends JPanel implements ActionListener, KeyListener {
 		my = 0;
 	}
 
+	public double getX() {
+		return x;
+	}
+
+	public double getY() {
+		return y;
+	}
+
+	public int getHP() {
+		return hp;
+	}
+
+	public void HP(int hp) {
+		this.hp = hp;
+	}
+
+	public int getMP() {
+		return mp;
+	}
+
+	public void setMP(int mp) {
+		this.mp = mp;
+	}
+
+	public boolean getHit() {
+		return is_hit;
+	}
+	
+	public void setHit(boolean is_hit) {
+		this.is_hit = is_hit;
+	}
+
+	public static void main(String[] args) {
+		JFrame f = new JFrame("Java Project");
+		character i = new character();
+
+		f.add(i);
+		f.setVisible(true);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setSize(800, 600);
+		f.setResizable(false);
+	}
 }
