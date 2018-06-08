@@ -8,27 +8,31 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class character extends JPanel implements ActionListener, KeyListener {
-	
-	private Graphics g;	// new added
+
+	private Graphics g; // new added
 	private BufferedImage to_be_painted; // new added
 	private Timer t;
 	private static double x, y, mx, my;
 	private int hp, mp;
 	private boolean is_hit, is_right;
 
-	public character() throws IOException {
+	public character() {
 		t = new Timer(5, this);
-		x=0;
-		y=0;
-		mx=0;
-		my=0;
+		x = 0;
+		y = 0;
+		mx = 0;
+		my = 0;
 		hp = 100;
 		mp = 100;
 		is_hit = false;
 		is_right = true;
 		t.start();
 		File file = new File("C:\\Users\\User\\Desktop\\test.jpg"); // new addeed
-		to_be_painted = ImageIO.read(file); // new added
+		try {
+			to_be_painted = ImageIO.read(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		g = to_be_painted.getGraphics(); // new added
 		addKeyListener(this);
 		setFocusable(true);
@@ -36,8 +40,8 @@ public class character extends JPanel implements ActionListener, KeyListener {
 	}
 
 	public void paint(Graphics g) {
-		super.paint(g);
-		g.drawImage(to_be_painted, (int)x, (int)y, (int)100, (int)100, null); // new added
+		//super.paint(g);
+		g.drawImage(to_be_painted, (int) x, (int) y, (int) 100, (int) 100, null); // new added
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -51,9 +55,9 @@ public class character extends JPanel implements ActionListener, KeyListener {
 	}
 
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_X);
-		else
-		{
+		if (e.getKeyCode() == KeyEvent.VK_X)
+			Game.changeX(e.getKeyCode());
+		else {
 			mx = Game.changeX(e.getKeyCode());
 			my = Game.changeY(e.getKeyCode());
 		}
@@ -94,29 +98,19 @@ public class character extends JPanel implements ActionListener, KeyListener {
 	public boolean getHit() {
 		return is_hit;
 	}
-	
+
 	public void setHit(boolean is_hit) {
 		this.is_hit = is_hit;
 	}
-	
+
 	public boolean getRight() {
 		return is_right;
 	}
-	
+
 	public void setRight(boolean is_right) {
 		this.is_right = is_right;
 	}
 	
-
-	public static void main(String[] args) throws IOException {
-		JFrame f = new JFrame("Java Project");
-		character i = new character();
-
-		//f.add();
-		f.add(i);
-		f.setVisible(true);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setSize(800, 600);
-		f.setResizable(false);
+	public static void main(String[] args){
 	}
 }
