@@ -15,6 +15,10 @@ public class MainWindow {
 	private JFrame window;
 	private JPanel menuPanel;
 	private JPanel gamePanel;
+	
+	private StatusDisplayer statDisplay;
+	private JPanel playableArea;
+	
 	public JPanel getGamePanel()
 	{
 		return gamePanel;
@@ -38,7 +42,16 @@ public class MainWindow {
 		gamePanel = new JPanel();
 		gamePanel.setVisible(false);
 		gamePanel.setBackground(null);
+		gamePanel.setLayout(null);
 		window.add(gamePanel);
+		
+		statDisplay = new StatusDisplayer();
+		statDisplay.setParent(gamePanel);
+		statDisplay.setVisible(true);
+		playableArea = new JPanel();
+		playableArea.setVisible(true);
+		playableArea.setLayout(null);
+		gamePanel.add(playableArea);
 		
 		syncFrameSize();
 		
@@ -53,6 +66,11 @@ public class MainWindow {
 		gamePanel.setVisible(true);
 		menuPanel.setVisible(false);
 	}
+	public void backtoMenu()
+	{
+		menuPanel.setVisible(true);
+		gamePanel.setVisible(false);
+	}
 	
 	public void setSize(int width, int height)
 	{
@@ -65,9 +83,21 @@ public class MainWindow {
 		syncFrameSize();
 	}
 	
+	public StatusDisplayer getStatusDisplayer()
+	{
+		return statDisplay;
+	}
+	public JPanel getPlayableArea()
+	{
+		return playableArea;
+	}
+	
 	protected void syncFrameSize() {
 		menuPanel.setSize(window.getSize());
 		gamePanel.setSize(window.getSize());
+		statDisplay.setSize(gamePanel.getWidth(), gamePanel.getHeight()/3);
+		playableArea.setLocation(0, gamePanel.getHeight()/3);
+		playableArea.setSize(gamePanel.getWidth(),gamePanel.getHeight() - gamePanel.getHeight()/3);
 	}
 	
 	private class MainWindowListeners implements WindowListener {
