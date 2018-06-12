@@ -1,3 +1,4 @@
+package game;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.RGBImageFilter;
@@ -5,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 //import com.etoak.util.ImgUtils;
-//輸入兩個值 動作 左右
+//頛詨���� ���� 撌血
 public class Test {
 
 	public BufferedImage[] davis0 = new BufferedImage[70];
@@ -59,21 +60,21 @@ public class Test {
         File newfile2=new File("C:/Users/user/Desktop/test/davis2.png");
         BufferedImage bufferedimage2 = new BufferedImage(800, 340, BufferedImage.TYPE_INT_ARGB);
         bufferedimage2 = ImageIO.read(newfile2);
-        //ImageIO.write(bufferedimage2, "png", new File("C:/Users/user/Desktop/test/davis/"+"test"+".png"));
+        ImageIO.write(bufferedimage2, "png", new File("C:/Users/user/Desktop/test/davis/"+"test"+".png"));
         File newfile3=new File("C:/Users/user/Desktop/test/davis_ball.png");
         BufferedImage bufferedimage3 = new BufferedImage(328, 141, BufferedImage.TYPE_INT_ARGB);
         bufferedimage3 = ImageIO.read(newfile3);
     	
         int length = 80;
-        for(int i = 0; i <= 9*length; i = i + length) {
-        	for(int j = 0; j <= 6*length; j = j + length) {
+        for(int i = 0; i <= 720; i += length) {
+        	for(int j = 0; j <= 480; j += length) {
         		int num = 10*j/80+i/80;
         		davis0[num] = ImgUtils.cropImage(bufferedimage1,i+1,j+1,i+80,j+80); 
         		//ImageIO.write(davis0[10*j/80+i/80], "png", new File("C:/Users/user/Desktop/test/davis/"+(10*j/80+i/80)+".png"));
         	}
         }
-        for(int i = 0; i <= 9*length; i = i + length) {
-        	for(int j = 0; j <= 3*length; j = j + length) {
+        for(int i = 0; i <= 720; i += length) {
+        	for(int j = 0; j <= 240; j += length) {
         		int num = 10*j/length+i/length;
         		if(j<=2*length) {
         			davis2[num] = ImgUtils.cropImage(bufferedimage2,i+1,j+1,i+length,j+length); 
@@ -84,8 +85,8 @@ public class Test {
         		//ImageIO.write(davis2[10*j/length+i/length], "png", new File("C:/Users/user/Desktop/test/davis/"+(10*j/length+i/length)+".png"));
         	}
         }
-        for(int i = 0; i <= 3*82; i = i + 82) {
-        	for(int j = 0; j <= 2*47; j = j + 47) {
+        for(int i = 0; i <= 246; i += 82) {
+        	for(int j = 0; j <= 94; j += 47) {
         		int num = 4*j/47+i/82;
         		davis_ball_temp[num] = ImgUtils.cropImage(bufferedimage3,i,j,i+81,j+46);
         		//ImageIO.write(davis_ball_temp[4*j/47+i/82], "png", new File("C:/Users/user/Desktop/test/davis/"+(4*j/47+i/82)+".png"));
@@ -140,22 +141,22 @@ public class Test {
         BufferedImage bufferedimage4 = new BufferedImage(800, 560, BufferedImage.TYPE_INT_ARGB);
         bufferedimage4 = ImageIO.read(newfile4);
 
-        for(int i = 0; i <= 9*length; i = i + length) {
-        	for(int j = 0; j <= 6*length; j = j + length) {
+        for(int i = 0; i <= 720; i += length) {
+        	for(int j = 0; j <= 480; j += length) {
         		int num = 10*j/80+i/80;
         		deep0[num] = ImgUtils.cropImage(bufferedimage1,i+1,j+1,i+80,j+80); 
         		//ImageIO.write(deep0[10*j/80+i/80], "png", new File("C:/Users/user/Desktop/test/deep/"+(10*j/80+i/80)+".png"));
         	}
         }
-        for(int i = 0; i <= 9*length; i = i + length) {
-        	for(int j = 0; j <= 6*length; j = j + length) {
+        for(int i = 0; i <= 720; i += length) {
+        	for(int j = 0; j <= 480; j += length) {
         		int num = 10*j/80+i/80;
         		deep1[num] = ImgUtils.cropImage(bufferedimage4,i+1,j+1,i+80,j+80); 
         		//ImageIO.write(deep1[10*j/80+i/80], "png", new File("C:/Users/user/Desktop/test/deep/"+(10*j/80+i/80)+".png"));
         	}
         }
-        for(int i = 0; i <= 9*length; i = i + length) {
-        	for(int j = 0; j <= 3*length; j = j + length) {
+        for(int i = 0; i <= 720; i += length) {
+        	for(int j = 0; j <= 240; j += length) {
         		int num = 10*j/length+i/length;
         		if(j<=2*length) {
         			deep2[num] = ImgUtils.cropImage(bufferedimage2,i+1,j+1,i+length,j+length); 
@@ -166,8 +167,8 @@ public class Test {
         		//ImageIO.write(deep2[10*j/length+i/length], "png", new File("C:/Users/user/Desktop/test/deep/"+(10*j/length+i/length)+".png"));
         	}
         }
-        for(int i = 0; i <= 3*82; i = i + 82) {
-        	for(int j = 0; j <= 1*83; j = j + 83) {
+        for(int i = 0; i <= 246; i += 82) {
+        	for(int j = 0; j <= 83; j += 83) {
         		int num = 4*j/83+i/82;
         		deep_ball_temp[num] = ImgUtils.cropImage(bufferedimage3,i,j,i+81,j+82); 
         		//ImageIO.write(deep_ball_temp[4*j/83+i/82], "png", new File("C:/Users/user/Desktop/test/deep/"+(4*j/83+i/82)+".png"));
