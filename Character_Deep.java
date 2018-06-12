@@ -1,12 +1,14 @@
+package game;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
-public class Character_Deep extends character{
+public class Character_Deep extends Character{
 	Test pictures;
 	int index = 0;
+	protected Character_Deep deep;
 	
 	public Character_Deep() throws IOException{
 		pictures = new Test();
@@ -15,9 +17,9 @@ public class Character_Deep extends character{
 	public void stand() throws InterruptedException {
 		if(!getHit()) {
 			if(getRight() == true)
-				changeImage(pictures.deep_stand);
+				changeImage(pictures.deep_stand,deep);
 			else
-				changeImage(pictures.deep_stand_inverse);
+				changeImage(pictures.deep_stand_inverse,deep);
 		}
 	}
 	public void walk(int i) throws InterruptedException {//1上2右3下4左
@@ -33,18 +35,18 @@ public class Character_Deep extends character{
 	}
 	public void hit() throws InterruptedException {
 		if(getRight() == true)
-			changeImage(pictures.deep_hit);
+			changeImage(pictures.deep_hit,deep);
 		else
-			changeImage(pictures.deep_hit_inverse);
+			changeImage(pictures.deep_hit_inverse,deep);
 	}
-	public void attacked(character player1, character player2) throws InterruptedException {//player自己 player2敵人
+	public void attacked(Character player1, Character player2) throws InterruptedException {//player自己 player2敵人
 		double dx ,dy;
 		if(getRight() == true) {
-			changeImage(pictures.deep_attacked);
+			changeImage(pictures.deep_attacked,deep);
 			dx = player2.getx()-player1.getx();
 		}
 		else {
-			changeImage(pictures.deep_attacked_inverse);
+			changeImage(pictures.deep_attacked_inverse,deep);
 			dx = player1.getx()-player2.getx();
 		}
 		dy = player1.gety()-player2.gety();
@@ -57,22 +59,22 @@ public class Character_Deep extends character{
 	}
 	public void jump() throws InterruptedException {
 		if(getRight() == true)
-			changeImage(pictures.deep_jump);
+			changeImage(pictures.deep_jump,deep);
 		else
-			changeImage(pictures.deep_jump_inverse);
+			changeImage(pictures.deep_jump_inverse,deep);
 	}
 	public void skill1() throws InterruptedException {
 		if(getRight() == true)
-			changeImage(pictures.deep_skill1);
+			changeImage(pictures.deep_skill1,deep);
 		else
-			changeImage(pictures.deep_skill1_inverse);
+			changeImage(pictures.deep_skill1_inverse,deep);
 		
 	}
 	public void skill2() throws InterruptedException {
 		if(getRight() == true)
-			changeImage(pictures.deep_skill2);
+			changeImage(pictures.deep_skill2,deep);
 		else
-			changeImage(pictures.deep_skill2_inverse);
+			changeImage(pictures.deep_skill2_inverse,deep);
 		if(getRight())
 			setx(getx()+2);
 		else
@@ -83,14 +85,14 @@ public class Character_Deep extends character{
 		// TODO Auto-generated method stub
 		if(getRight())
 			try {
-				changeImage(pictures.deep_attacked);
+				changeImage(pictures.deep_attacked,deep);
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		else
 			try {
-				changeImage(pictures.deep_attacked_inverse);
+				changeImage(pictures.deep_attacked_inverse,deep);
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

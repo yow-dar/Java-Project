@@ -1,13 +1,14 @@
+package game;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
-public class Character_Davis extends character{
+public class Character_Davis extends Character{
 	Test pictures;
 	int index = 0;
-	
+	protected Character_Davis davis;
 	public Character_Davis() throws IOException{
 		pictures = new Test();
 		pictures.initial();
@@ -15,9 +16,9 @@ public class Character_Davis extends character{
 	public void stand() throws InterruptedException {
 		if(!getHit()) {
 			if(getRight() == true)
-				changeImage(pictures.davis_stand);
+				changeImage(pictures.davis_stand,davis);
 			else
-				changeImage(pictures.davis_stand_inverse);
+				changeImage(pictures.davis_stand_inverse,davis);
 		}
 	}
 	public void walk(int i) throws InterruptedException {//1上2右3下4左
@@ -33,18 +34,18 @@ public class Character_Davis extends character{
 	}
 	public void hit() throws InterruptedException {
 		if(getRight() == true)
-			changeImage(pictures.davis_hit);
+			changeImage(pictures.davis_hit,davis);
 		else
-			changeImage(pictures.davis_hit_inverse);
+			changeImage(pictures.davis_hit_inverse,davis);
 	}
-	public void attacked(character player1, character player2) throws InterruptedException {//player自己 player2敵人
+	public void attacked(Character player1, Character player2) throws InterruptedException {//player自己 player2敵人
 		double dx ,dy;
 		if(getRight() == true) {
-			changeImage(pictures.davis_attacked);
+			changeImage(pictures.davis_attacked,davis);
 			dx = player2.getx()-player1.getx();
 		}
 		else {
-			changeImage(pictures.davis_attacked_inverse);
+			changeImage(pictures.davis_attacked_inverse,davis);
 			dx = player1.getx()-player2.getx();
 		}
 		dy = player1.gety()-player2.gety();
@@ -57,22 +58,22 @@ public class Character_Davis extends character{
 	}
 	public void jump() throws InterruptedException {
 		if(getRight() == true)
-			changeImage(pictures.davis_jump);
+			changeImage(pictures.davis_jump,davis);
 		else
-			changeImage(pictures.davis_jump_inverse);
+			changeImage(pictures.davis_jump_inverse,davis);
 	}
 	public void skill1() throws InterruptedException {
 		if(getRight() == true)
-			changeImage(pictures.davis_skill1);
+			changeImage(pictures.davis_skill1,davis);
 		else
-			changeImage(pictures.davis_skill1_inverse);
+			changeImage(pictures.davis_skill1_inverse,davis);
 		
 	}
 	public void skill2() throws InterruptedException {
 		if(getRight() == true)
-			changeImage(pictures.davis_skill2);
+			changeImage(pictures.davis_skill2,davis);
 		else
-			changeImage(pictures.davis_skill2_inverse);
+			changeImage(pictures.davis_skill2_inverse,davis);
 		if(getRight())
 			setx(getx()+2);
 		else
@@ -83,14 +84,14 @@ public class Character_Davis extends character{
 		// TODO Auto-generated method stub
 		if(getRight())
 			try {
-				changeImage(pictures.davis_attacked);
+				changeImage(pictures.davis_attacked,davis);
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		else
 			try {
-				changeImage(pictures.davis_attacked_inverse);
+				changeImage(pictures.davis_attacked_inverse,davis);
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
