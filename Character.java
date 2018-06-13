@@ -141,8 +141,10 @@ public class Character extends JPanel implements ActionListener, Runnable, KeyLi
 		for (int i = 0; i < images.length; ++i) {
 			to_be_painted = images[i];
 			//update(g);
-			repaint();
-			TimeUnit.MICROSECONDS.sleep(500);
+			//repaint();
+			paintImmediately(0,0,getWidth(),getHeight());
+			Thread.currentThread().sleep(100);
+			//TimeUnit.MICROSECONDS.sleep(1000);
 		}
 	}
 
