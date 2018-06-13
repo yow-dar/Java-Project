@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 //import com.etoak.util.ImgUtils;
-//輸入兩個值 動作 左右
+//頛詨���� ���� 撌血
 public class Test {
 
 	public BufferedImage[] davis0 = new BufferedImage[70];
@@ -14,6 +14,7 @@ public class Test {
 	public BufferedImage[] davis_hit = new BufferedImage[4];
 	public BufferedImage[] davis_attacked = new BufferedImage[3];
 	public BufferedImage[] davis_jump = new BufferedImage[4];
+	public BufferedImage[] davis_lose = new BufferedImage[4];
 	public BufferedImage[] davis2 = new BufferedImage[40];
 	public BufferedImage[] davis_skill1 = new BufferedImage[7];
 	public BufferedImage[] davis_skill2 = new BufferedImage[8];
@@ -25,6 +26,7 @@ public class Test {
 	public BufferedImage[] davis_hit_inverse = new BufferedImage[4];
 	public BufferedImage[] davis_attacked_inverse = new BufferedImage[3];
 	public BufferedImage[] davis_jump_inverse = new BufferedImage[4];
+	public BufferedImage[] davis_lose_inverse = new BufferedImage[4];
 	public BufferedImage[] davis_skill1_inverse = new BufferedImage[7];
 	public BufferedImage[] davis_skill2_inverse = new BufferedImage[8];
 	public BufferedImage[] davis_ball_inverse = new BufferedImage[4];
@@ -35,6 +37,7 @@ public class Test {
 	public BufferedImage[] deep_hit = new BufferedImage[4];
 	public BufferedImage[] deep_attacked = new BufferedImage[3];
 	public BufferedImage[] deep_jump = new BufferedImage[4];
+	public BufferedImage[] deep_lose = new BufferedImage[4];
 	public BufferedImage[] deep2 = new BufferedImage[40];
 	public BufferedImage[] deep_skill1 = new BufferedImage[5];
 	public BufferedImage[] deep_skill2 = new BufferedImage[20];
@@ -47,6 +50,7 @@ public class Test {
 	public BufferedImage[] deep_hit_inverse = new BufferedImage[4];
 	public BufferedImage[] deep_attacked_inverse = new BufferedImage[3];
 	public BufferedImage[] deep_jump_inverse = new BufferedImage[4];
+	public BufferedImage[] deep_lose_inverse = new BufferedImage[4];
 	public BufferedImage[] deep_skill1_inverse = new BufferedImage[5];
 	public BufferedImage[] deep_skill2_inverse = new BufferedImage[20];
 	public BufferedImage[] deep_ball_inverse = new BufferedImage[4];
@@ -110,6 +114,10 @@ public class Test {
         for(int i = 0; i < 4; ++i) {
         	davis_jump[i] = davis0[i+60];
         	davis_jump_inverse[i] = ImgUtils.inverse(davis_jump[i]);
+        }
+        for(int i = 0; i < 4; ++i) {
+        	davis_lose[i] = davis0[i+31];
+        	davis_lose_inverse[i] = ImgUtils.inverse(davis_lose[i]);
         }
         for(int i = 0; i < 7; ++i) {
         	davis_skill1[i] = davis2[i];
@@ -192,6 +200,10 @@ public class Test {
         for(int i = 0; i < 4; ++i) {
         	deep_jump[i] = deep0[i+60];
         	deep_jump_inverse[i] = ImgUtils.inverse(deep_jump[i]);
+        }        
+        for(int i = 0; i < 4; ++i) {
+        	deep_lose[i] = deep0[i+31];
+        	deep_lose_inverse[i] = ImgUtils.inverse(deep_lose[i]);
         }
         for(int i = 0; i < 5; ++i) {
         	deep_skill1[i] = deep1[i+65];

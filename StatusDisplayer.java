@@ -212,7 +212,7 @@ public class StatusDisplayer {
 			else
 			{
 				HPBarFill.setSize(HPBar.getWidth()*chara.getHP()/100,HPBar.getHeight());
-				MPBarFill.setSize(MPBar.getWidth()*chara.getMP()/100,MPBar.getHeight());
+				MPBarFill.setSize(MPBar.getWidth()*chara.getMP()/3000,MPBar.getHeight());
 			}
 		}
 	}

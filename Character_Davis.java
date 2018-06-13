@@ -24,5 +24,7 @@ public class Character_Davis extends Character {
 		attack_img_inverse = pictures.davis_attacked_inverse;
 		stand_img = pictures.davis_stand;
 		stand_img_inverse = pictures.davis_stand_inverse;
+		lose_img = pictures.davis_lose;
+		lose_img_inverse = pictures.davis_lose_inverse;
 	}
 }

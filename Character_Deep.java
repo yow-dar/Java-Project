@@ -24,5 +24,7 @@ public class Character_Deep extends Character {
 		attack_img_inverse = pictures.deep_attacked_inverse;
 		stand_img = pictures.deep_stand;
 		stand_img_inverse = pictures.deep_stand_inverse;
+		lose_img = pictures.deep_lose;
+		lose_img_inverse = pictures.deep_lose_inverse;
 	}
 }
