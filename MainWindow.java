@@ -28,6 +28,7 @@ import javax.swing.JLabel;
 public class MainWindow {
 
 	private JFrame window;
+	private JPanel mainPanel;
 	
 	private JPanel menuPanel;
 	private JPanel gamePanel;
@@ -53,17 +54,28 @@ public class MainWindow {
 		window.addWindowListener(new MainWindowListeners(window));
 		window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		keyListener = null;
+		mainPanel = new JPanel() { 
+			@Override
+			public boolean isOptimizedDrawingEnabled() {
+				return false;
+			}
+		};
+		mainPanel.setBackground(null);
+		mainPanel.setSize(window.getSize());
+		mainPanel.setLayout(null);
+		mainPanel.setVisible(true);
+		window.add(mainPanel);
 
 		menuPanel = new JPanel();
 		menuPanel.setVisible(false);
 		menuPanel.setBackground(Color.blue);
-		window.add(menuPanel);
+		mainPanel.add(menuPanel);
 
 		gamePanel = new JPanel();
 		gamePanel.setVisible(false);
 		//gamePanel.setBackground(new Color(0,0,0,0));
 		gamePanel.setLayout(null);
-		window.add(gamePanel);
+		mainPanel.add(gamePanel);
 		
 //		window.setComponentZOrder(menuPanel, 1);
 //		window.setComponentZOrder(gamePanel, 1);
@@ -244,9 +256,9 @@ public class MainWindow {
 
 			action = null;
 			
-			this.setSize(window.getWidth()/4,window.getHeight()/4);
-			window.add(this, 0);
-			this.setLocation(window.getWidth()/2 - this.getWidth()/2, window.getHeight()/2 - this.getHeight()/2);
+			this.setSize(mainPanel.getWidth()/4,mainPanel.getHeight()/4);
+			mainPanel.add(this, 0);
+			this.setLocation(mainPanel.getWidth()/2 - this.getWidth()/2, mainPanel.getHeight()/2 - this.getHeight()/2);
 			
 		}
 		
@@ -274,7 +286,7 @@ public class MainWindow {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				d.setVisible(false);
-				window.remove(d);
+				mainPanel.remove(d);
 				if(d.action != null)
 					d.action.run();
 			}
