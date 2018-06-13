@@ -1,11 +1,17 @@
 
 import javax.swing.JPanel;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
@@ -15,12 +21,14 @@ import java.nio.Buffer;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class MainWindow {
 
 	private JFrame window;
+	
 	private JPanel menuPanel;
 	private JPanel gamePanel;
 
@@ -44,7 +52,6 @@ public class MainWindow {
 		window.setResizable(false);
 		window.addWindowListener(new MainWindowListeners(window));
 		window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		
 		keyListener = null;
 
 		menuPanel = new JPanel();
@@ -57,6 +64,9 @@ public class MainWindow {
 		//gamePanel.setBackground(new Color(0,0,0,0));
 		gamePanel.setLayout(null);
 		window.add(gamePanel);
+		
+//		window.setComponentZOrder(menuPanel, 1);
+//		window.setComponentZOrder(gamePanel, 1);
 
 		statDisplay = new StatusDisplayer();
 		statDisplay.setParent(gamePanel);
@@ -89,6 +99,11 @@ public class MainWindow {
 		menuPanel.setVisible(true);
 
 		startGame();
+	}
+	
+	public void dispose()
+	{
+		window.dispose();
 	}
 
 	public void startGame() {
@@ -134,6 +149,15 @@ public class MainWindow {
 		playableArea.setLocation(0, gamePanel.getHeight() / 3);
 		playableArea.setSize(gamePanel.getWidth(), gamePanel.getHeight() - gamePanel.getHeight() / 3);
 		bgl.setSize(playableArea.getSize());
+	}
+	
+	public Dialog createDialog()
+	{
+		return new Dialog();
+	}
+	public Dialog createDialog(String text)
+	{
+		return new Dialog().setText(text);
 	}
 
 	private class MainWindowListeners implements WindowListener {
@@ -186,6 +210,76 @@ public class MainWindow {
 
 		}
 
+	}
+	
+	public class Dialog extends JPanel
+	{
+		private JPanel dialogTextPanel;
+		private JLabel dialogText;
+		private JPanel dialogButtonPanel;
+		private JButton closeButton;
+		private Runnable action;
+		private Dialog() 
+		{
+			this.setVisible(false);
+			this.setLayout(new BorderLayout());
+			
+			dialogTextPanel = new JPanel();
+			dialogTextPanel.setLayout(new FlowLayout());
+			dialogText = new JLabel();
+			dialogTextPanel.add(dialogText);
+			this.add(dialogTextPanel, BorderLayout.CENTER);
+			dialogTextPanel.setVisible(true);
+			dialogText.setVisible(true);
+			
+			dialogButtonPanel = new JPanel();
+			dialogButtonPanel.setLayout(new FlowLayout());
+			closeButton = new JButton("OK");
+			dialogButtonPanel.add(closeButton);
+			this.add(dialogButtonPanel, BorderLayout.PAGE_END);
+			closeButton.setVisible(true);
+			dialogButtonPanel.setVisible(true);
+			DialogButtonListener tmp = new DialogButtonListener(this);
+			closeButton.addActionListener(tmp);
+
+			action = null;
+			
+			this.setSize(window.getWidth()/4,window.getHeight()/4);
+			window.add(this, 0);
+			this.setLocation(window.getWidth()/2 - this.getWidth()/2, window.getHeight()/2 - this.getHeight()/2);
+			
+		}
+		
+		public Dialog setText(String text)
+		{
+			dialogText.setText(text);
+			return this;
+		}
+		public Dialog setButtonAction(Runnable r)
+		{
+			action = r;
+			return this;
+		}
+		
+		private class DialogButtonListener implements ActionListener
+		{
+			private Dialog d;
+			
+			public DialogButtonListener(Dialog dd)
+			{
+				d = dd;
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				d.setVisible(false);
+				window.remove(d);
+				if(d.action != null)
+					d.action.run();
+			}
+			
+		}
 	}
 
 }

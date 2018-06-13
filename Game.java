@@ -59,18 +59,9 @@ public class Game implements ActionListener, KeyListener, Runnable {
 	         // Open audio clip and load samples from the audio input stream.
 	         clip.open(audio);
 	         clip.start();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnsupportedAudioFileException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (LineUnavailableException e) {
-	         e.printStackTrace();
-	    }
+		}
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -81,6 +72,21 @@ public class Game implements ActionListener, KeyListener, Runnable {
 //		davis.update(p.getGraphics());
 //		deep.update(p.getGraphics());
 		mainWindow.getStatusDisplayer().update();
+		if(davis.getHP() <= 0 && deep.getHP() > 0)
+		{
+			mainWindow.createDialog("deep won!").setButtonAction(new Runnable() {public void run() {mainWindow.dispose();}}).setVisible(true);
+			t.stop();
+		}
+		else if(deep.getHP() <= 0 && davis.getHP() > 0)
+		{
+			mainWindow.createDialog("davis won!").setButtonAction(new Runnable() {public void run() {mainWindow.dispose();}}).setVisible(true);
+			t.stop();
+		}
+		else if(deep.getHP()<=0 && davis.getHP() <= 0)
+		{
+			mainWindow.createDialog("Tie!").setButtonAction(new Runnable() {public void run() {mainWindow.dispose();}}).setVisible(true);
+			t.stop();
+		}
 		if(davis.getMP() <= 3000) {
 			davis.setMP(davis.getMP()+10);
 		}
