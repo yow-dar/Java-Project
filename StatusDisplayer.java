@@ -1,5 +1,3 @@
-
-
 import java.awt.Color;
 import java.awt.Container;
 
@@ -11,7 +9,7 @@ public class StatusDisplayer {
 	
 	private JPanel displayPanel;
 	
-	private CharacterStatusDisplay[] characterDisplays;
+	private CharacterStatusDisplay[] CharacterDisplays;
 	
 	public StatusDisplayer()
 	{
@@ -19,11 +17,11 @@ public class StatusDisplayer {
 		displayPanel.setBackground(Color.BLUE);
 		displayPanel.setLayout(null);
 		
-		characterDisplays = new CharacterStatusDisplay[8];
+		CharacterDisplays = new CharacterStatusDisplay[8];
 		for(int i=0;i<8;++i)
 		{
-			characterDisplays[i] = new CharacterStatusDisplay();
-			displayPanel.add(characterDisplays[i].getComponent());
+			CharacterDisplays[i] = new CharacterStatusDisplay();
+			displayPanel.add(CharacterDisplays[i].getComponent());
 		}
 	}
 	
@@ -63,26 +61,26 @@ public class StatusDisplayer {
 	
 	public void update()
 	{
-		for(int i=0;i<characterDisplays.length;++i)
+		for(int i=0;i<CharacterDisplays.length;++i)
 		{
-			characterDisplays[i].update();
+			CharacterDisplays[i].update();
 		}
 	}
 	public void update(int index)
 	{
-		if(index<characterDisplays.length && index >= 0)
-			characterDisplays[index].update();
+		if(index<CharacterDisplays.length && index >= 0)
+			CharacterDisplays[index].update();
 		else
 			System.out.println("StatusDisplayer.update(int index) called with illegal index: "+index);
 	}
-	public void update(character chara)
+	public void update(Character chara)
 	{
 		if(chara == null)
 			return;
-		for(int i=0;i<characterDisplays.length;++i)
+		for(int i=0;i<CharacterDisplays.length;++i)
 		{
-			if(characterDisplays[i].getCharacter() == chara)
-				characterDisplays[i].update();
+			if(CharacterDisplays[i].getCharacter() == chara)
+				CharacterDisplays[i].update();
 		}
 	}
 	
@@ -96,42 +94,42 @@ public class StatusDisplayer {
 		for(int y=0;y<2;++y)
 			for(int x=0;x<4;++x)
 			{
-				characterDisplays[4*y+x].setLocation(x*swidth, y*sheight);
-				characterDisplays[4*y+x].setSize(swidth,sheight);
+				CharacterDisplays[4*y+x].setLocation(x*swidth, y*sheight);
+				CharacterDisplays[4*y+x].setSize(swidth,sheight);
 			}
 	}
 	
-	public void registerCharacter(int id,character chara)
+	public void registerCharacter(int id,Character chara)
 	{
-		if(id<characterDisplays.length && id>0)
-			characterDisplays[id].setCharacter(chara);
+		if(id<CharacterDisplays.length && id>0)
+			CharacterDisplays[id].setCharacter(chara);
 		else
 			System.out.println("StatusDisplayer.registerCharacter called with illegal id: "+id);
 	}
 	public void clearCharacters()
 	{
 		for(int i=0;i<8;++i)
-			characterDisplays[i].setCharacter(null);
+			CharacterDisplays[i].setCharacter(null);
 	}
 	public void unregisterCharacter(int id)
 	{
-		if(id<characterDisplays.length && id>0)
-			characterDisplays[id].setCharacter(null);
+		if(id<CharacterDisplays.length && id>0)
+			CharacterDisplays[id].setCharacter(null);
 		else
 			System.out.println("StatusDisplayer.unregisterCharacter called with illegal id: "+id);
 	}
-	public void unregisterCharacter(character chara)
+	public void unregisterCharacter(Character chara)
 	{
-		for(int i=0;i<characterDisplays.length;++i)
-			if(characterDisplays[i].getCharacter() == chara)
-				characterDisplays[i].setCharacter(null);
+		for(int i=0;i<CharacterDisplays.length;++i)
+			if(CharacterDisplays[i].getCharacter() == chara)
+				CharacterDisplays[i].setCharacter(null);
 	}
 	
 	
 	protected class CharacterStatusDisplay
 	{
 		private JPanel display;
-		private character chara;
+		private Character chara;
 		
 		private JPanel HPBar;
 		private JPanel HPBarFill;
@@ -148,6 +146,7 @@ public class StatusDisplayer {
 			
 			HPBar = new JPanel();
 			HPBar.setBackground(new Color(65, 0, 0));
+			HPBar.setLayout(null);
 			display.add(HPBar);
 			HPBarFill = new JPanel();
 			HPBarFill.setBackground(new Color(204,0,0));
@@ -157,6 +156,7 @@ public class StatusDisplayer {
 			
 			MPBar = new JPanel();
 			MPBar.setBackground(new Color(0,0,40));
+			MPBar.setLayout(null);
 			display.add(MPBar);
 			MPBarFill = new JPanel();
 			MPBarFill.setBackground(new Color(0,0,204));
@@ -187,12 +187,12 @@ public class StatusDisplayer {
 			return display;
 		}
 		
-		public void setCharacter(character chara)
+		public void setCharacter(Character chara)
 		{
 			this.chara = chara;
 			update();
 		}
-		public character getCharacter()
+		public Character getCharacter()
 		{
 			return chara;
 		}

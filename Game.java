@@ -1,52 +1,182 @@
 import javax.swing.*;
+
+import java.awt.Color;
 import java.awt.event.*;
+import java.io.IOException;
 
-public class Game extends JFrame {
+public class Game implements ActionListener, KeyListener {
+
+	public static JPanel p;
+	private Character deep;
+	private Character davis;
+	private Timer t;
+	private MainWindow mainWindow;
+
+	public Game(MainWindow mainWindow) {
+		try {
+			deep = new Character_Deep(this);
+			davis = new Character_Davis(this);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		this.mainWindow = mainWindow;
+		p = mainWindow.getPlayableArea();
+		deep.setLocation(25, 25);
+		deep.setSize(100, 100);
+		davis.setLocation(p.getWidth() - 100 - 25, 25);
+		davis.setSize(100, 100);
+		p.add(deep,0);
+		p.add(davis,0);
+		
+		mainWindow.getStatusDisplayer().registerCharacter(1, deep);
+		mainWindow.getStatusDisplayer().registerCharacter(3, davis);
+		
+//		JPanel fpanel = new JPanel();
+//		fpanel.setBackground(Color.orange);
+//		fpanel.setLocation(10, 10);
+//		fpanel.setSize(100,100);
+//		p.add(fpanel);
+//		fpanel.setVisible(true);
+		//p.setBackground(Color.orange);
+		p.setVisible(true);
+		t = new Timer(10, this);
+		t.start();
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		//p.repaint();
+//		p.paintComponents(p.getGraphics());
+		//p.update(p.getGraphics());
+		//p.repaint();
+//		davis.update(p.getGraphics());
+//		deep.update(p.getGraphics());
+		mainWindow.getStatusDisplayer().update();
+	}
 	
-	public static JFrame f = new JFrame("Java Project");
-	private static character i = new character();
-	
-	public static double changeX(int a) {
-		switch (a) {
+	public void keyPressed(KeyEvent e) {
+		switch (e.getKeyCode()) {
 		case KeyEvent.VK_UP:
-			return 0;
+			davis.up = true;
+			davis.setmy(2);
+			break;
 		case KeyEvent.VK_DOWN:
-			return 0;
+			//System.out.println("YEE");
+			davis.down = true;
+			davis.setmy(2);
+			break;
 		case KeyEvent.VK_RIGHT:
-			return 1.5;
+			davis.setRight(true);
+			davis.right = true;
+			davis.setmx(2);
+			break;
 		case KeyEvent.VK_LEFT:
-			return -1.5;
-		case KeyEvent.VK_X:
-			attack.atk(character.getx(),character.gety());
-			attack b = new attack();
-			f.add(b);
-			f.setVisible(true);
-			return 0;
+			davis.setRight(false);
+			davis.left = true;
+			davis.setmx(2);
+			break;
+		case KeyEvent.VK_COMMA:
+			try {
+				davis.skill1();
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			
+			Ball davis_b = new Ball(davis.getX(), davis.getY(), davis, deep);
+			p.add(davis_b,0);
+			davis_b.setSize(80, 80);
+			p.setVisible(true);
+			break;
+		case KeyEvent.VK_PERIOD:
+			try {
+				davis.skill2(davis, deep);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			break;
+		case KeyEvent.VK_W:
+			deep.up = true;
+			deep.setmy(2);
+			break;
+		case KeyEvent.VK_S:
+			deep.down = true;
+			deep.setmy(2);
+			break;
+		case KeyEvent.VK_D:
+			deep.setRight(true);
+			deep.right = true;
+			deep.setmx(2);
+			break;
+		case KeyEvent.VK_A:
+			deep.setRight(false);
+			deep.left = true;
+			deep.setmx(2);
+			break;
+		case KeyEvent.VK_F:
+			try {
+				deep.skill1();
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			Ball deep_b = new Ball(deep.getX(), deep.getY(), deep , davis);
+			p.add(deep_b,0);
+			deep_b.setSize(80, 80);
+			p.setVisible(true);
+			break;
+		case KeyEvent.VK_G:
+			try {
+				deep.skill2(deep, davis);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			break;
 		default:
-			return 0;
+			break;
 		}
 	}
 
-	public static double changeY(int a) {
-		switch (a) {
+	public void keyReleased(KeyEvent e) {
+		switch (e.getKeyCode()) {
 		case KeyEvent.VK_UP:
-			return -1.5;
+			davis.up = false;
+			break;
 		case KeyEvent.VK_DOWN:
-			return 1.5;
+			davis.down = false;
+			break;
 		case KeyEvent.VK_RIGHT:
-			return 0;
+			davis.right = false;
+			break;
 		case KeyEvent.VK_LEFT:
-			return 0;
+			davis.left = false;
+			break;
+		case KeyEvent.VK_W:
+			deep.up = false;
+			break;
+		case KeyEvent.VK_S:
+			deep.down = false;
+			break;
+		case KeyEvent.VK_D:
+			deep.right = false;
+			break;
+		case KeyEvent.VK_A:
+			deep.left = false;
+			break;
 		default:
-			return 0;
+			break;
 		}
 	}
-	
-	public static void main(String[] args){
-		f.add(i);
-		f.setVisible(true);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setSize(800, 600);
-		f.setResizable(false);
+
+	public void keyTyped(KeyEvent e) {
+
+	}
+
+	public static void remove(Ball ball) {
+		p.remove(ball);
+		ball = null;
+	}
+
+	public static void main(String[] args) {
+		MainWindow mainWindow = new MainWindow();
+		Game game = new Game(mainWindow);
+		mainWindow.setKeyListener(game);
 	}
 }
